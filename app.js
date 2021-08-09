@@ -9,9 +9,9 @@ const passport = require('passport');
 const redis = require('redis');
 const RedisStore = require('connect-redis')(session);
 
-dotenv.config();
+dotenv.config();  
 const redisClient = redis.createClient({
-  url : `redis://${process.env.REDIS_HOST}:${process.env.REIDS_PORT}`,
+  url : `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
   password : process.env.REDIS_PASSWORD,
 });
 
@@ -61,6 +61,7 @@ const sessionOption = {
   },
   store : new RedisStore({client : redisClient})
 };
+app.use(session(sessionOption));
 
 if(process.env.NODE_ENV === 'production'){
   sessionOption.proxy = true;
